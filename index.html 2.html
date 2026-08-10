@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>$TOADZ — Fair Launch Swamp Gang on Solana</title>
+<meta name="description" content="$TOADZ — hand-drawn degen frogs, fair launched on pump.fun. No presale. No team bags. Just swamp.">
+<link rel="icon" href="assets/toadz-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#080b06;
+    --surface:#0f150d;
+    --surface-2:#161f12;
+    --line:#26331f;
+    --sage:#7c9a5f;
+    --sage-dim:#5a7245;
+    --neon:#baff3d;
+    --neon-dim:#9be62a;
+    --cream:#e9e2cd;
+    --cream-dim:#a9a58e;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--cream);
+    font-family:'JetBrains Mono', monospace;
+    overflow-x:hidden;
+    background-image:
+      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(124,154,95,0.16), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 90% 10%, rgba(186,255,61,0.07), transparent 55%);
+  }
+  h1,h2,h3, .display{
+    font-family:'Baloo 2', cursive;
+    color:var(--cream);
+    letter-spacing:0.5px;
+  }
+  a{color:inherit; text-decoration:none;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
+  ::selection{background:var(--neon); color:var(--ink);}
+
+  /* pond texture divider */
+  .ripple{
+    height:2px;
+    background:repeating-linear-gradient(90deg, var(--line) 0 10px, transparent 10px 20px);
+    opacity:0.6;
+  }
+
+  /* NAV */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(8,11,6,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{display:flex; align-items:center; justify-content:space-between; height:68px;}
+  .brand{display:flex; align-items:center; gap:10px; font-family:'Baloo 2'; font-weight:800; font-size:22px; color:var(--neon);}
+  .brand img{height:36px; width:36px; object-fit:contain; filter:drop-shadow(0 0 8px rgba(186,255,61,0.35));}
+  .navlinks{display:flex; gap:28px; font-size:13px; letter-spacing:0.03em; color:var(--cream-dim);}
+  .navlinks a:hover{color:var(--neon);}
+  .navlinks{display:none;}
+  @media(min-width:820px){.navlinks{display:flex;}}
+  .buy-btn{
+    background:var(--neon); color:var(--ink); font-weight:700; font-family:'Baloo 2';
+    padding:10px 20px; border-radius:999px; font-size:14px;
+    box-shadow:0 0 0 1px rgba(186,255,61,0.4), 0 8px 24px -8px rgba(186,255,61,0.5);
+    transition:transform .15s ease, box-shadow .15s ease;
+    white-space:nowrap;
+  }
+  .buy-btn:hover{transform:translateY(-2px); box-shadow:0 0 0 1px rgba(186,255,61,0.6), 0 12px 28px -6px rgba(186,255,61,0.6);}
+
+  /* HERO */
+  .hero{position:relative; padding:88px 0 60px; overflow:hidden;}
+  .hero-banner{width:100%; max-width:820px; display:block; margin:0 auto 8px; filter:drop-shadow(0 0 40px rgba(124,154,95,0.25));}
+  .kicker{
+    text-align:center; font-size:12px; letter-spacing:0.22em; text-transform:uppercase;
+    color:var(--neon-dim); margin-bottom:18px; opacity:0.9;
+  }
+  .kicker::before, .kicker::after{content:"◦ ◦ ◦"; color:var(--sage-dim); margin:0 12px; letter-spacing:4px;}
+  .hero h1{font-size:14px; text-align:center; visibility:hidden; height:0;} /* image is the real H1 visually; keep sr text */
+  .hero p.tag{
+    text-align:center; font-size:19px; color:var(--cream); max-width:640px; margin:6px auto 34px;
+    line-height:1.55;
+  }
+  .hero p.tag b{color:var(--neon); font-weight:700;}
+
+  .ca-bar{
+    max-width:620px; margin:0 auto 34px;
+    background:var(--surface); border:1px solid var(--line); border-radius:14px;
+    padding:14px 18px; display:flex; align-items:center; gap:12px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+  }
+  .ca-bar .label{font-size:10px; text-transform:uppercase; letter-spacing:0.14em; color:var(--sage); white-space:nowrap;}
+  .ca-bar .addr{font-size:12.5px; color:var(--cream-dim); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; flex:1;}
+  .copy-btn{
+    background:var(--surface-2); border:1px solid var(--line); color:var(--neon);
+    font-family:'JetBrains Mono'; font-size:11px; font-weight:700; letter-spacing:0.06em;
+    padding:8px 14px; border-radius:8px; cursor:pointer; white-space:nowrap;
+    transition:background .15s, border-color .15s;
+  }
+  .copy-btn:hover{background:var(--sage-dim); border-color:var(--sage); color:var(--ink);}
+  .copy-btn.copied{background:var(--neon); color:var(--ink); border-color:var(--neon);}
+
+  .cta-row{display:flex; gap:14px; justify-content:center; flex-wrap:wrap;}
+  .cta-secondary{
+    border:1px solid var(--line); color:var(--cream); font-family:'Baloo 2'; font-weight:700;
+    padding:10px 22px; border-radius:999px; font-size:14px; background:var(--surface);
+    transition:border-color .15s, color .15s;
+  }
+  .cta-secondary:hover{border-color:var(--sage); color:var(--neon);}
+
+  /* floating mascots */
+  .float-toad{position:absolute; opacity:0.9; filter:drop-shadow(0 6px 16px rgba(0,0,0,0.5)); pointer-events:none;}
+  .float-toad.a{width:74px; top:20px; left:2%; animation:drift 7s ease-in-out infinite;}
+  .float-toad.b{width:58px; top:120px; right:4%; animation:drift 8.5s ease-in-out infinite reverse;}
+  .float-toad.c{width:46px; bottom:6%; left:10%; animation:drift 6s ease-in-out infinite; animation-delay:1s; display:none;}
+  @keyframes drift{0%,100%{transform:translateY(0) rotate(-2deg);} 50%{transform:translateY(-16px) rotate(2deg);}}
+  @media(min-width:900px){.float-toad.c{display:block;}}
+
+  /* SECTIONS */
+  section{padding:70px 0;}
+  .eyebrow{
+    font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:var(--sage);
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .eyebrow::before{content:""; width:22px; height:1px; background:var(--sage);}
+  .section-title{font-size:32px; margin-bottom:16px;}
+  @media(min-width:700px){.section-title{font-size:40px;}}
+
+  /* chart */
+  .chart-card{
+    border:1px solid var(--line); border-radius:16px; overflow:hidden;
+    background:var(--surface); box-shadow:0 20px 50px -20px rgba(0,0,0,0.6);
+  }
+  .chart-card iframe{width:100%; height:520px; border:0; display:block; background:#0d1210;}
+
+  /* trade + swap layout */
+  .trade-grid{display:grid; grid-template-columns:1fr; gap:20px;}
+  @media(min-width:980px){.trade-grid{grid-template-columns:1.35fr 1fr; align-items:stretch;}}
+  .swap-card{
+    border:1px solid var(--line); border-radius:16px; overflow:hidden;
+    background:var(--surface); box-shadow:0 20px 50px -20px rgba(0,0,0,0.6);
+    min-height:520px; display:flex; flex-direction:column;
+  }
+  .swap-card #jupiter-terminal{flex:1; min-height:520px;}
+  .swap-loading{
+    flex:1; display:flex; align-items:center; justify-content:center;
+    color:var(--cream-dim); font-size:12px; letter-spacing:0.06em; text-transform:uppercase;
+  }
+
+  /* about grid */
+  .about-grid{display:grid; grid-template-columns:1fr; gap:40px; align-items:center;}
+  @media(min-width:860px){.about-grid{grid-template-columns:1.1fr 0.9fr;}}
+  .about-text p{color:var(--cream-dim); line-height:1.75; font-size:15px; margin-bottom:16px;}
+  .about-text p b{color:var(--cream);}
+  .about-visual{
+    position:relative; border:1px solid var(--line); border-radius:18px; padding:40px;
+    background:radial-gradient(ellipse at center, rgba(124,154,95,0.12), transparent 70%);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .about-visual img{width:180px; filter:drop-shadow(0 0 30px rgba(186,255,61,0.25));}
+
+  /* how to buy */
+  .steps{display:grid; grid-template-columns:1fr; gap:18px;}
+  @media(min-width:760px){.steps{grid-template-columns:repeat(4,1fr);}}
+  .step{
+    background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:24px 20px;
+    position:relative;
+  }
+  .step .num{
+    font-family:'Baloo 2'; font-weight:800; font-size:34px; color:var(--sage-dim);
+    -webkit-text-stroke:1px var(--sage); margin-bottom:10px; display:block;
+  }
+  .step h3{font-size:17px; margin-bottom:8px; color:var(--neon);}
+  .step p{font-size:13px; color:var(--cream-dim); line-height:1.6;}
+  .step-arrow{display:none; color:var(--sage-dim); align-self:center; font-size:20px;}
+  @media(min-width:760px){
+    .steps{grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;}
+    .step-arrow{display:flex;}
+  }
+
+  /* tokenomics */
+  .tokeno-grid{display:grid; grid-template-columns:1fr; gap:16px;}
+  @media(min-width:700px){.tokeno-grid{grid-template-columns:repeat(3,1fr);}}
+  .tokeno-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:22px;
+  }
+  .tokeno-card .k{font-size:11px; text-transform:uppercase; letter-spacing:0.1em; color:var(--sage); margin-bottom:8px;}
+  .tokeno-card .v{font-family:'Baloo 2'; font-size:20px; color:var(--cream);}
+  .ca-bar.small{margin:0; max-width:100%;}
+
+  /* socials */
+  .social-grid{display:grid; grid-template-columns:1fr; gap:16px;}
+  @media(min-width:700px){.social-grid{grid-template-columns:1fr 1fr;}}
+  .social-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:28px;
+    display:flex; align-items:center; gap:18px; transition:border-color .15s, transform .15s;
+  }
+  .social-card:hover{border-color:var(--neon-dim); transform:translateY(-3px);}
+  .social-icon{
+    width:48px; height:48px; border-radius:12px; background:var(--surface-2);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+    border:1px solid var(--line); color:var(--neon); font-size:20px;
+  }
+  .social-card h3{font-size:16px; margin-bottom:3px;}
+  .social-card p{font-size:12px; color:var(--cream-dim);}
+
+  footer{border-top:1px solid var(--line); padding:44px 0 30px;}
+  .footer-grid{display:flex; flex-direction:column; gap:18px; align-items:center; text-align:center;}
+  @media(min-width:700px){.footer-grid{flex-direction:row; justify-content:space-between; text-align:left;}}
+  .disclaimer{font-size:11px; color:var(--cream-dim); line-height:1.7; max-width:640px; margin:0 auto; text-align:center; opacity:0.75;}
+
+  .sticky-buy{
+    position:fixed; bottom:18px; left:50%; transform:translateX(-50%); z-index:60;
+    display:flex; gap:10px; align-items:center;
+  }
+  @media(min-width:900px){.sticky-buy{display:none;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="#" class="brand"><img src="assets/toadz-icon.png" alt="Toadz mascot">$TOADZ</a>
+    <div class="navlinks">
+      <a href="#about">About</a>
+      <a href="#chart">Chart</a>
+      <a href="#buy">How to Buy</a>
+      <a href="#tokenomics">Tokenomics</a>
+      <a href="#community">Community</a>
+    </div>
+    <a class="buy-btn" href="https://pump.fun/coin/9sa9nwDeoFMYShhGgVxBJTHTXHF6jbQnxRXF1Pqrpump" target="_blank" rel="noopener">Buy $TOADZ</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <img class="float-toad a" src="assets/toadz-icon.png" alt="">
+  <img class="float-toad b" src="assets/toadz-icon.png" alt="">
+  <img class="float-toad c" src="assets/toadz-icon.png" alt="">
+  <div class="wrap">
+    <p class="kicker">Fair Launch · Solana · pump.fun</p>
+    <h1>$TOADZ — Fair Launch Swamp Gang on Solana</h1>
+    <img class="hero-banner" src="assets/toadz-banner.png" alt="Toadz logo — hand-drawn frogs">
+    <p class="tag">Bug-eyed, hand-drawn, and jumping straight into the swamp. <b>No presale. No team bag.</b> One toad, one parachute, one bonding curve — the gang lands together or not at all.</p>
+    <div class="ca-bar">
+      <span class="label">CA</span>
+      <span class="addr" id="ca-text">9sa9nwDeoFMYShhGgVxBJTHTXHF6jbQnxRXF1Pqrpump</span>
+      <button class="copy-btn" onclick="copyCA(this)">COPY</button>
+    </div>
+    <div class="cta-row">
+      <a class="buy-btn" href="https://pump.fun/coin/9sa9nwDeoFMYShhGgVxBJTHTXHF6jbQnxRXF1Pqrpump" target="_blank" rel="noopener">🐸 Buy on pump.fun</a>
+      <a class="cta-secondary" href="#chart">Chart & swap ↓</a>
+    </div>
+  </div>
+</header>
+
+<div class="ripple wrap"></div>
+
+<section id="chart">
+  <div class="wrap">
+    <p class="eyebrow">Live market</p>
+    <h2 class="section-title">Watch the swamp move — and trade right here</h2>
+    <div class="trade-grid">
+      <div class="chart-card">
+        <iframe src="https://dexscreener.com/solana/9sa9nwDeoFMYShhGgVxBJTHTXHF6jbQnxRXF1Pqrpump?embed=1&theme=dark&trades=0&info=0" title="TOADZ live chart" loading="lazy"></iframe>
+      </div>
+      <div class="swap-card">
+        <div id="jupiter-terminal"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-text">
+        <p class="eyebrow">The lore</p>
+        <h2 class="section-title">Toadz don't ask permission</h2>
+        <p>Somewhere between a pond and a launchpad, a squad of hand-drawn, way-too-big-eyed toads decided the bonding curve was just another lily pad to jump on. No pitch deck. No whitepaper nobody reads. Just <b>fair-launched on pump.fun</b>, out in the open, same as everyone else.</p>
+        <p>One toad rides in on a parachute. One's clutching an egg like it's the last one on the pad. All of them showed up the same way you did — <b>by buying in, no head start, no hidden bag.</b></p>
+        <p>This isn't a roadmap project. It's a swamp. You're either in it or you're watching from the bank.</p>
+      </div>
+      <div class="about-visual">
+        <img src="assets/toadz-icon.png" alt="Toadz mascot close-up">
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="ripple wrap"></div>
+
+<section id="buy">
+  <div class="wrap">
+    <p class="eyebrow">Onboarding</p>
+    <h2 class="section-title">How to buy $TOADZ</h2>
+    <div class="steps">
+      <div class="step">
+        <span class="num">01</span>
+        <h3>Get a wallet</h3>
+        <p>Download Phantom (or your Solana wallet of choice) from the App Store, Play Store, or as a browser extension.</p>
+      </div>
+      <span class="step-arrow">→</span>
+      <div class="step">
+        <span class="num">02</span>
+        <h3>Fund it with SOL</h3>
+        <p>Buy SOL on an exchange and send it to your wallet address, or on-ramp directly inside Phantom.</p>
+      </div>
+      <span class="step-arrow">→</span>
+      <div class="step">
+        <span class="num">03</span>
+        <h3>Head to pump.fun</h3>
+        <p>Open the $TOADZ page on pump.fun and connect your wallet in the top corner.</p>
+      </div>
+      <span class="step-arrow">→</span>
+      <div class="step">
+        <span class="num">04</span>
+        <h3>Paste CA & swap</h3>
+        <p>Double-check the contract address matches the one on this page, enter your amount, and confirm.</p>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:30px;">
+      <a class="buy-btn" href="https://pump.fun/coin/9sa9nwDeoFMYShhGgVxBJTHTXHF6jbQnxRXF1Pqrpump" target="_blank" rel="noopener">🐸 Buy on pump.fun</a>
+    </div>
+  </div>
+</section>
+
+<div class="ripple wrap"></div>
+
+<section id="tokenomics">
+  <div class="wrap">
+    <p class="eyebrow">Structure</p>
+    <h2 class="section-title">Tokenomics — no tricks, just the curve</h2>
+    <div class="tokeno-grid">
+      <div class="tokeno-card">
+        <p class="k">Launch method</p>
+        <p class="v">Fair launch — pump.fun bonding curve</p>
+      </div>
+      <div class="tokeno-card">
+        <p class="k">Presale</p>
+        <p class="v">None</p>
+      </div>
+      <div class="tokeno-card">
+        <p class="k">Team allocation</p>
+        <p class="v">None — same entry as everyone</p>
+      </div>
+      <div class="tokeno-card">
+        <p class="k">Chain</p>
+        <p class="v">Solana</p>
+      </div>
+      <div class="tokeno-card">
+        <p class="k">Ticker</p>
+        <p class="v">$TOADZ</p>
+      </div>
+      <div class="tokeno-card">
+        <p class="k">Liquidity</p>
+        <p class="v">Migrates to DEX at bonding curve completion</p>
+      </div>
+    </div>
+    <div class="ca-bar" style="margin-top:20px;">
+      <span class="label">CA</span>
+      <span class="addr">9sa9nwDeoFMYShhGgVxBJTHTXHF6jbQnxRXF1Pqrpump</span>
+      <button class="copy-btn" onclick="copyCA(this)">COPY</button>
+    </div>
+  </div>
+</section>
+
+<div class="ripple wrap"></div>
+
+<section id="community">
+  <div class="wrap">
+    <p class="eyebrow">Join the pond</p>
+    <h2 class="section-title">Where the swamp hangs out</h2>
+    <div class="social-grid" style="grid-template-columns:1fr; max-width:420px; margin:0 auto;">
+      <a class="social-card" href="https://x.com/toadzfamily" target="_blank" rel="noopener" id="x-link">
+        <div class="social-icon">𝕏</div>
+        <div>
+          <h3>Follow on X</h3>
+          <p>Announcements, memes, chart updates</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="brand" style="font-size:18px;"><img src="assets/toadz-icon.png" alt="">$TOADZ</div>
+      <div class="ca-bar small" style="max-width:420px;">
+        <span class="label">CA</span>
+        <span class="addr">9sa9nwDeoFMYShhGgVxBJTHTXHF6jbQnxRXF1Pqrpump</span>
+        <button class="copy-btn" onclick="copyCA(this)">COPY</button>
+      </div>
+    </div>
+    <p class="disclaimer" style="margin-top:24px;">
+      $TOADZ is a meme coin with no intrinsic value or expectation of financial return. There is no formal team, no roadmap promises, and no guarantee of future performance. Do your own research and only risk what you can afford to lose.
+    </p>
+  </div>
+</footer>
+
+<div class="sticky-buy">
+  <a class="buy-btn" href="https://pump.fun/coin/9sa9nwDeoFMYShhGgVxBJTHTXHF6jbQnxRXF1Pqrpump" target="_blank" rel="noopener">🐸 Buy $TOADZ</a>
+</div>
+
+<script>
+  function copyCA(btn){
+    const ca = "9sa9nwDeoFMYShhGgVxBJTHTXHF6jbQnxRXF1Pqrpump";
+    navigator.clipboard.writeText(ca).then(() => {
+      const original = btn.textContent;
+      btn.textContent = "COPIED";
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = original; btn.classList.remove('copied'); }, 1600);
+    });
+  }
+
+</script>
+
+<script src="https://terminal.jup.ag/main-v4.js" data-preload defer></script>
+<script>
+  function initJupiterTerminal(){
+    if(!window.Jupiter){ setTimeout(initJupiterTerminal, 300); return; }
+    window.Jupiter.init({
+      displayMode: "integrated",
+      integratedTargetId: "jupiter-terminal",
+      endpoint: "https://mainnet.helius-rpc.com/?api-key=3a6a44b7-2f45-4239-8609-46df810c6285",
+      formProps: {
+        initialInputMint: "So11111111111111111111111111111111111111112",
+        initialOutputMint: "9sa9nwDeoFMYShhGgVxBJTHTXHF6jbQnxRXF1Pqrpump",
+        fixedOutputMint: true
+      }
+    });
+  }
+  window.addEventListener('load', initJupiterTerminal);
+</script>
+
+</body>
+</html>
